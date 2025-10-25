@@ -25,20 +25,38 @@ public class DetalleInquilinoFragment extends Fragment {
         View view = binding.getRoot();
 
         Bundle bundle = getArguments();
-            int idInmueble = bundle.getInt("idInmueble");
-            vm.cargarContrato(idInmueble);
-
+        int idInmueble = bundle.getInt("idInmueble");
+        vm.cargarContrato(idInmueble);
 
 
         vm.getMInquilino().observe(getViewLifecycleOwner(), inquilino -> {
-                binding.tvNombre.setText(inquilino.getNombre() + " " + inquilino.getApellido());
-                binding.tvDni.setText("DNI: " + inquilino.getDni());
-                binding.tvTelefono.setText("Tel: " + inquilino.getTelefono());
-                binding.tvEmail.setText("Email: " + inquilino.getEmail());
-                binding.tvGarante.setText("Garante: " + inquilino.getGarante());
-                binding.tvTelGarante.setText("Teléfono garante:  " + inquilino.getTelGarante());
+
+            String nombre = validarTexto(inquilino.getNombre());
+            String apellido = validarTexto(inquilino.getApellido());
+            String dni = validarTexto(inquilino.getDni());
+            String telefono = validarTexto(inquilino.getTelefono());
+            String email = validarTexto(inquilino.getEmail());
+            String garante = validarTexto(inquilino.getGarante());
+            String telGarante = validarTexto(inquilino.getTelGarante());
+
+            binding.tvNombre.setText(nombre + " " + apellido);
+            binding.tvDni.setText("DNI: " + dni);
+            binding.tvTelefono.setText("Tel: " + telefono);
+            binding.tvEmail.setText("Email: " + email);
+            binding.tvGarante.setText("Garante: " + garante);
+            binding.tvTelGarante.setText("Teléfono garante: " + telGarante);
+
         });
 
         return view;
     }
+
+    private String validarTexto(String valor) {
+        if (valor == null || valor.trim().isEmpty() || valor.equals("null")) {
+            return "No hay datos";
+        }
+        return valor;
+    }
+
+
 }

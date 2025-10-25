@@ -66,5 +66,5 @@
     <fragment
         android:id="@+id/detallePagosFragment"
         android:name="com.example.inmobiliariaderamo.ui.pagos.DetallePagosFragment"
-        android:label="DetallePagosFragment" />
+        android:label="Detalle de Pagos" />
 </navigation>
