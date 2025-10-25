@@ -20,22 +20,18 @@ import retrofit2.Response;
 
 public class ListarFragmentViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<Inmueble>> mListaMutable;
+    private MutableLiveData<List<Inmueble>> listaInmuebles = new MutableLiveData<>();
 
     public ListarFragmentViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<List<Inmueble>> getLista() {
-        if (mListaMutable == null) {
-            mListaMutable = new MutableLiveData<>();
-        }
-        return mListaMutable;
+    public LiveData<List<Inmueble>> getListaInmuebles() {
+        return listaInmuebles;
     }
 
-    public void cargarLista() {
+    public void obtenerListaInmuebles() {
         String token = ApiClient.leerToken(getApplication());
-
         ApiClient.InmoServicio api = ApiClient.getInmoServicio();
         Call<List<Inmueble>> call = api.listarInmuebles("Bearer " + token);
 
@@ -43,22 +39,20 @@ public class ListarFragmentViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {
                 if (response.isSuccessful()) {
-                    List<Inmueble> lista = response.body();
-                    if (lista != null) {
-                        mListaMutable.setValue(lista);
-                        Toast.makeText(getApplication(), "Lista cargada correctamente", Toast.LENGTH_SHORT).show();
-                    }
+                    listaInmuebles.postValue(response.body());
                 } else {
-                    Toast.makeText(getApplication(), "Error al obtener la lista: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "no se obtuvieron Inmuebles", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Inmueble>> call, Throwable t) {
-                Toast.makeText(getApplication(), "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("ListarFragmentViewModel", "Error de conexión", t);
+            public void onFailure(Call<List<Inmueble>> call, Throwable throwable) {
+                Log.d("errorInmueble", throwable.getMessage());
 
+                Toast.makeText(getApplication(), "Error al obtener Inmuebles", Toast.LENGTH_LONG).show();
             }
         });
     }
+
+
 }

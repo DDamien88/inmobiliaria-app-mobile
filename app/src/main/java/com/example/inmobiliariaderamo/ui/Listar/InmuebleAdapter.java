@@ -1,6 +1,8 @@
 package com.example.inmobiliariaderamo.ui.Listar;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,63 +10,71 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.inmobiliariaderamo.R;
 import com.example.inmobiliariaderamo.modelo.Inmueble;
-
+import com.example.inmobiliariaderamo.request.ApiClient;
 
 import java.util.List;
 
-public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHolderInmueble> {
-
-    private List<Inmueble> listaInmuebles;
+public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.viewHolderInmueble> {
     private Context context;
-    private LayoutInflater inflater;
+    private List<Inmueble> listado;
+    private LayoutInflater li;
 
-    public InmuebleAdapter(List<Inmueble> listaInmuebles, Context context, LayoutInflater inflater) {
-        this.listaInmuebles = listaInmuebles;
+    public InmuebleAdapter(Context context, List<Inmueble> listado, LayoutInflater li) {
         this.context = context;
-        this.inflater = inflater;
+        this.listado = listado;
+        this.li = li;
     }
 
     @NonNull
     @Override
-    public ViewHolderInmueble onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = inflater.inflate(R.layout.item_inmueble, parent, false);
-        return new ViewHolderInmueble(itemView);
+    public viewHolderInmueble onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = li.inflate(R.layout.item_inmueble, parent, false);
+        return new viewHolderInmueble(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderInmueble holder, int position) {
-        Inmueble inmueble = listaInmuebles.get(position);
+    public void onBindViewHolder(@NonNull viewHolderInmueble holder, int position) {
+        Inmueble inmuebleActual = listado.get(position);
+        holder.direccion.setText("Dirección: " + inmuebleActual.getDireccion());
+        holder.precio.setText("Valor: " + inmuebleActual.getValor());
+        Glide.with(context)
+                .load(ApiClient.BASE_URL + inmuebleActual.getImagen())
+                .placeholder(R.drawable.inmueble)
+                .error("null")
+                .into(holder.imagen);
+        ((viewHolderInmueble) holder).itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("inmuebleBundle", inmuebleActual);
+                Navigation.findNavController((Activity)context, R.id.nav_host_fragment_content_main).navigate(R.id.detalleInmuebleFragment, bundle);
 
-        holder.tvDireccion.setText(inmueble.getDireccion());
-        holder.tvPrecio.setText("$ " + inmueble.getValor());
-        holder.tvAmbientes.setText("Ambientes: " + inmueble.getAmbientes());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return listaInmuebles != null ? listaInmuebles.size() : 0;
+        return listado.size();
     }
 
-    public void setLista(List<Inmueble> lista) {
-        this.listaInmuebles = lista;
-        notifyDataSetChanged();
-    }
+    public class viewHolderInmueble extends RecyclerView.ViewHolder {
 
-    // ---- ViewHolder interno ----
-    public static class ViewHolderInmueble extends RecyclerView.ViewHolder {
-        TextView tvDireccion, tvPrecio, tvAmbientes;
-        ImageView imgInmueble;
+        TextView direccion, precio, ambientes;
+        ImageView imagen;
 
-        public ViewHolderInmueble(@NonNull View itemView) {
+        public viewHolderInmueble(@NonNull View itemView) {
             super(itemView);
-            tvDireccion = itemView.findViewById(R.id.tvDireccion);
-            tvPrecio = itemView.findViewById(R.id.tvPrecio);
-            tvAmbientes = itemView.findViewById(R.id.tvAmbientes);
-            imgInmueble = itemView.findViewById(R.id.imgInmueble);
+            ambientes = itemView.findViewById(R.id.tvAmbientes);
+            direccion = itemView.findViewById(R.id.tvDireccion);
+            precio = itemView.findViewById(R.id.tvAmbientes);
+            imagen = itemView.findViewById(R.id.imgInmueble);
         }
     }
 }

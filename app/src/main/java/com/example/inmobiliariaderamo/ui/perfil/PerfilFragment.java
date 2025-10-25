@@ -32,7 +32,7 @@ public class PerfilFragment extends Fragment {
         vm = new ViewModelProvider(this).get(PerfilViewModel.class);
 
         vm.getPropietario().observe(getViewLifecycleOwner(), propietario -> {
-            //if (propietario != null) {
+
                 //binding.etCodigo.setText(propietario.getIdPropietario());
                 binding.etCodigo.setText(String.valueOf(propietario.getIdPropietario()));
                 binding.etDni.setText(propietario.getDni());

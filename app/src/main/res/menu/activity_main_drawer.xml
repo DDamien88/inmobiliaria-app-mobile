@@ -23,7 +23,7 @@
             android:title="@string/inquilinos" />
 
         <item
-            android:id="@+id/nav_contratos"
+            android:id="@+id/contratosFragment"
             android:icon="@drawable/contrato"
             android:title="@string/contratos" />
 

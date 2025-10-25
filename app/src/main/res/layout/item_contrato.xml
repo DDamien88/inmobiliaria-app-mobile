@@ -5,42 +5,34 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="4dp"
-    app:contentPadding="15dp">
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="12dp">
 
         <ImageView
-            android:id="@+id/imgInmueble"
+            android:id="@+id/imgInmuebleContrato"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/inmueble"/>
+            android:src="@drawable/inmueble" />
 
         <TextView
-            android:id="@+id/tvDireccion"
+            android:id="@+id/tvDireccionContrato"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dirección"
+            android:text="Dirección del inmueble"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp" />
 
-        <TextView
-            android:id="@+id/tvAmbientes"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnVerContrato"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ambientes: 3" />
-
-        <TextView
-            android:id="@+id/tvPrecio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$ 100000" />
-
+            android:text="Ver Contrato" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

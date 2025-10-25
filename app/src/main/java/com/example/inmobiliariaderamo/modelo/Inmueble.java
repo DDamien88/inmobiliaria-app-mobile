@@ -1,24 +1,29 @@
 package com.example.inmobiliariaderamo.modelo;
 
-public class Inmueble {
+import java.io.Serializable;
+
+public class Inmueble implements Serializable {
     private int idInmueble;
     private String direccion;
     private String uso;
     private String tipo;
     private int ambientes;
-    private float superficie;
-    private float latitud;
-    private float valor;
+    private int superficie;
+    private double latitud;
+    private double valor;
     private String imagen;
     private boolean disponible;
-    private float longitud;
+    private double longitud;
     private int idPropietario;
+    private Propietario duenio;
+
+    private boolean tieneContratoVigente;
 
     public Inmueble() {
 
     }
 
-    public Inmueble(int idInmueble, String direccion, String uso, String tipo, int ambientes, float superficie, float latitud, float valor, String imagen, boolean disponible, float longitud, int idPropietario) {
+    public Inmueble(int idInmueble, String direccion, String uso, String tipo, int ambientes, int superficie, double latitud, double valor, String imagen, boolean disponible, double longitud, int idPropietario, Propietario duenio, boolean tieneContratoVigente) {
         this.idInmueble = idInmueble;
         this.direccion = direccion;
         this.uso = uso;
@@ -31,6 +36,8 @@ public class Inmueble {
         this.disponible = disponible;
         this.longitud = longitud;
         this.idPropietario = idPropietario;
+        this.duenio = duenio;
+        this.tieneContratoVigente = tieneContratoVigente;
     }
 
     public int getIdInmueble() {
@@ -73,27 +80,27 @@ public class Inmueble {
         this.ambientes = ambientes;
     }
 
-    public float getSuperficie() {
+    public int getSuperficie() {
         return superficie;
     }
 
-    public void setSuperficie(float superficie) {
+    public void setSuperficie(int superficie) {
         this.superficie = superficie;
     }
 
-    public float getLatitud() {
+    public double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(float latitud) {
+    public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
 
-    public float getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
@@ -113,11 +120,11 @@ public class Inmueble {
         this.disponible = disponible;
     }
 
-    public float getLongitud() {
+    public double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(float longitud) {
+    public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
 
@@ -128,4 +135,21 @@ public class Inmueble {
     public void setIdPropietario(int idPropietario) {
         this.idPropietario = idPropietario;
     }
+
+    public Propietario getDuenio() {
+        return duenio;
+    }
+
+    public void setDuenio(Propietario duenio) {
+        this.duenio = duenio;
+    }
+
+    public boolean isTieneContratoVigente() {
+        return tieneContratoVigente;
+    }
+
+    public void setTieneContratoVigente(boolean tieneContratoVigente) {
+        this.tieneContratoVigente = tieneContratoVigente;
+    }
 }
+

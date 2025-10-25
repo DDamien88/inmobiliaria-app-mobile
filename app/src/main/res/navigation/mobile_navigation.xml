@@ -36,4 +36,35 @@
         android:id="@+id/resetPasswordActivity"
         android:name="com.example.inmobiliariaderamo.ui.login.ResetPasswordActivity"
         android:label="ResetPasswordActivity" />
+    <fragment
+        android:id="@+id/detalleInmuebleFragment"
+        android:name="com.example.inmobiliariaderamo.ui.Listar.DetalleInmuebleFragment"
+        android:label="fragment_detalle_inmueble"
+        tools:layout="@layout/fragment_detalle_inmueble" />
+    <fragment
+        android:id="@+id/agregarInmuebleFragment"
+        android:name="com.example.inmobiliariaderamo.ui.Listar.AgregarInmuebleFragment"
+        android:label="fragment_agregar_inmueble"
+        tools:layout="@layout/fragment_agregar_inmueble" />
+    <fragment
+        android:id="@+id/nav_Inquilinos"
+        android:name="com.example.inmobiliariaderamo.ui.inquilinos.InquilinosFragment"
+        android:label="Inquilinos"
+        tools:layout="@layout/fragment_inquilinos" />
+    <fragment
+        android:id="@+id/detalleInquilinoFragment"
+        android:name="com.example.inmobiliariaderamo.ui.inquilinos.DetalleInquilinoFragment"
+        android:label="Inquilino" />
+    <fragment
+        android:id="@+id/contratosFragment"
+        android:name="com.example.inmobiliariaderamo.ui.contratos.ContratosFragment"
+        android:label="Contratos vigentes" />
+    <fragment
+        android:id="@+id/detalleContratoFragment"
+        android:name="com.example.inmobiliariaderamo.ui.contratos.DetalleContratoFragment"
+        android:label="Contrato" />
+    <fragment
+        android:id="@+id/detallePagosFragment"
+        android:name="com.example.inmobiliariaderamo.ui.pagos.DetallePagosFragment"
+        android:label="DetallePagosFragment" />
 </navigation>

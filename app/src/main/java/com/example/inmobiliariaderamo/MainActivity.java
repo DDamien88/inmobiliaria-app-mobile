@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.inmobiliariaderamo.modelo.Propietario;
 import com.example.inmobiliariaderamo.request.ApiClient;
 import com.example.inmobiliariaderamo.ui.login.LoginActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -86,12 +88,29 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_inicio, R.id.nav_perfil, R.id.nav_inmuebles)
+                R.id.nav_inicio, R.id.nav_perfil, R.id.nav_inmuebles, R.id.nav_Inquilinos, R.id.contratosFragment)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        //botón flotante
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            FloatingActionButton fab = findViewById(R.id.fab);
+
+            if (destination.getId() == R.id.nav_inmuebles) {
+                fab.setVisibility(View.VISIBLE);
+                fab.setImageResource(R.drawable.plus);
+                fab.setOnClickListener(v -> {
+                    navController.navigate(R.id.agregarInmuebleFragment);
+                });
+            } else {
+                fab.setVisibility(View.GONE);
+            }
+        });
+
+
 
         //cerrar sesión
 

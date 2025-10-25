@@ -132,6 +132,7 @@ public class LoginActivityViewModel extends AndroidViewModel {
                 if (response.isSuccessful()) {
                     String token = response.body();
                     ApiClient.guardarToken(getApplication(), token);
+                    Toast.makeText(getApplication(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
                     Log.d("token", token);
                     Intent intent = new Intent(getApplication(), MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -146,7 +147,7 @@ public class LoginActivityViewModel extends AndroidViewModel {
             @Override
             public void onFailure(Call<String> call, Throwable throwable) {
                 Log.d("token", throwable.getMessage());
-
+                Toast.makeText(getApplication(), "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -30,17 +30,11 @@
             android:textSize="16sp"
             android:layout_marginTop="8dp"/>
 
-        <TextView
-            android:id="@+id/tvAmbientes"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnVerInquilino"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ambientes: 3" />
-
-        <TextView
-            android:id="@+id/tvPrecio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$ 100000" />
+            android:text="Ver" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

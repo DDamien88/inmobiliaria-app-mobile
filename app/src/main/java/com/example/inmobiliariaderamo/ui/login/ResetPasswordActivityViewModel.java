@@ -1,7 +1,8 @@
 package com.example.inmobiliariaderamo.ui.login;
 
 import android.app.Application;
-import android.widget.Toast;
+import android.util.Log;
+import android.util.Patterns;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -15,7 +16,8 @@ import retrofit2.Response;
 
 public class ResetPasswordActivityViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<String> mensaje = new MutableLiveData<>();
+    private MutableLiveData<String> mensaje = new MutableLiveData<>();
+    private static final String TAG = "ResetPasswordVM";
 
     public ResetPasswordActivityViewModel(@NonNull Application application) {
         super(application);
@@ -26,26 +28,41 @@ public class ResetPasswordActivityViewModel extends AndroidViewModel {
     }
 
     public void enviarSolicitudReset(String email) {
+        Log.d(TAG, "Solicitando reset para email: " + email);
+
         if (email.isEmpty()) {
             mensaje.setValue("Ingrese su correo electrónico");
             return;
         }
 
-        ApiClient.InmoServicio api = ApiClient.getInmoServicio();
-        Call<Void> call = api.resetPassword(email);
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mensaje.setValue("Ingrese un correo electrónico válido");
+            return;
+        }
 
-        call.enqueue(new Callback<Void>() {
+        ApiClient.InmoServicio api = ApiClient.getInmoServicio();
+        Call<String> call = api.resetPassword(email);
+
+        Log.d(TAG, "Llamando a la API...");
+
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    mensaje.setValue("Revise su correo electrónico");
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.d(TAG, "Respuesta HTTP: " + response.code());
+                Log.d(TAG, "Mensaje: " + response.body());
+
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.i(TAG, "Éxito: " + response.body());
+                    mensaje.setValue(response.body());
                 } else {
+                    Log.e(TAG, "Error: Código " + response.code());
                     mensaje.setValue("No se encontró el usuario");
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e(TAG, "Fallo conexión: " + t.getMessage());
                 mensaje.setValue("Error al conectar con el servidor");
             }
         });
